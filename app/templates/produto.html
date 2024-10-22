@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Lista de Produtos</title>
     <style>
-        body {
+       body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
@@ -47,30 +47,25 @@
     <header>
         <h1>Bem-vindo ao Mundo das Alergias</h1>
         <nav>
-            <a href="produto.html">Produtos</a>
             <a href="receita.html">Receitas</a>
             <a href="vivencia.html">Vivências</a>
             <a href="comentario/">Contato</a>
         </nav>
     </header>
-    <section id="o-que-sao">
-        <h2>O que é a {{pagina_inicial.nome_alergia}}?</h2>
-        <p>
-            {{pagina_inicial.detalhamento}}
-        </p>
-    </section>
-    <section id="sintomas">
-        <h2>Sintomas</h2>
-    </section>
-
-    <section id="tratamentos">
-        <h2>Tratamentos</h2>
-        <p> 
-        </p>
-    </section>
-
-    <footer>
-        <p>&copy; 2024 Mundo das Alergias. Todos os direitos reservados.</p>
-    </footer>
+    <h1>Produtos Cadastrados</h1>
+    <ul>
+        {% for produto in produtos %}
+            <li>
+                <strong>{{ produto.nome }}</strong>
+                <p>{{ produto.categoria }}</p>
+                <p>{{ produto.descricao }}</p>
+                <p>{% if produto.img %}
+                    <img src="{{ produto.img.png }}" alt="{{ produto.nome }}" style="max-width: 150px; display: block; margin-bottom: 10px;"></p>
+                    {% endif %}
+                </li>
+        {% empty %}
+            <li>Nenhum produto cadastrado.</li>
+        {% endfor %}
+    </ul>
 </body>
 </html>

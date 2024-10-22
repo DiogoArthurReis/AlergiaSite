@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Lista de Receitas</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -45,32 +45,29 @@
 </head>
 <body>
     <header>
-        <h1>Bem-vindo ao Mundo das Alergias</h1>
+    <h1>Bem-vindo ao Mundo das Alergias</h1>
         <nav>
             <a href="produto.html">Produtos</a>
-            <a href="receita.html">Receitas</a>
             <a href="vivencia.html">Vivências</a>
             <a href="comentario/">Contato</a>
         </nav>
     </header>
-    <section id="o-que-sao">
-        <h2>O que é a {{pagina_inicial.nome_alergia}}?</h2>
-        <p>
-            {{pagina_inicial.detalhamento}}
-        </p>
-    </section>
-    <section id="sintomas">
-        <h2>Sintomas</h2>
-    </section>
-
-    <section id="tratamentos">
-        <h2>Tratamentos</h2>
-        <p> 
-        </p>
-    </section>
-
-    <footer>
-        <p>&copy; 2024 Mundo das Alergias. Todos os direitos reservados.</p>
-    </footer>
+    <h1>Receitas Cadastradas</h1>
+    <ul>
+        {% for receita in receitas %}
+            <li>
+                {% if receita.imagem %}
+                    <img src="{{ receita.imagem.url }}" alt="{{ receita.nome }}" style="max-width: 150px; display: block; margin-bottom: 10px;">
+                {% endif %}
+                <strong>{{ receita.nome }}</strong><br>
+                <h3>Ingredientes:</h3>
+                <p>{{ receita.ingredientes }}</p>
+                <h3>Modo de Preparo:</h3>
+                <p>{{ receita.descricao }}</p>
+            </li>
+        {% empty %}
+            <li>Nenhuma receita cadastrada.</li>
+        {% endfor %}
+    </ul>
 </body>
 </html>

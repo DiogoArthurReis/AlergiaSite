@@ -23,11 +23,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name='pagina_inicial.html'), name='index'),
     path('usuario/', UsuarioView.as_view(), name='usuario'),
-    path('vivencia/', VivenciaView.as_view(), name='vivencia'),
+    path('vivencia.html', VivenciaView.as_view(), name='vivencia'),
     path('comentario/', ComentarioView.as_view(), name='comentario'),
     path('categoria/', CategoriaView.as_view(), name='categoria'),
-    path('produto/', ProdutoView.as_view(), name='produto'),
-    path('receita/', ReceitaView.as_view(), name='receita'),
-    path('pagina_inicial/', Pagina_InicialView.as_view(), name='pagina_inicial'),
+    path('produto.html', ProdutoView.as_view(), name='produto'),
+    path('receita.html', ReceitaView.as_view(), name='receita'),
+    path('pagina_inicial.html', Pagina_InicialView.as_view(), name='pagina_inicial'),
 ]
 

@@ -5,14 +5,12 @@ from django.db import models
 class GerenciarUsuario(models.Model):
     nome = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
-    telefone = models.CharField(max_length=100)
-    senha = models.CharField(max_length=100)
 
     class Meta:
         verbose_name_plural = "GerenciarUsuario"
 
     def __str__(self):
-        return f'{self.nome} {self.email} {self.telefone} {self.senha}'
+        return f'{self.nome} {self.email}'
         
 class GerenciarVivencia(models.Model):
     titulo = models.CharField(max_length=100) 
@@ -26,7 +24,13 @@ class GerenciarVivencia(models.Model):
         return f'{self.titulo} {self.img} {self.descricao}'
         
 class GerenciarComentario(models.Model):
-    mensagem = models.CharField(max_length=500)
+    usuario = models.ForeignKey(GerenciarUsuario, on_delete=models.CASCADE) 
+    email = models.EmailField()
+    mensagem = models.TextField()
+    data = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Mensagem de {self.usuario.nome} em {self.data.strftime('%Y-%m-%d %H:%M:%S')}"
 
     class Meta:
         verbose_name_plural = "GerenciarComentario"

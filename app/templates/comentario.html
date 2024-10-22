@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Mensagens</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -50,27 +50,14 @@
             <a href="produto.html">Produtos</a>
             <a href="receita.html">Receitas</a>
             <a href="vivencia.html">Vivências</a>
-            <a href="comentario/">Contato</a>
         </nav>
     </header>
-    <section id="o-que-sao">
-        <h2>O que é a {{pagina_inicial.nome_alergia}}?</h2>
-        <p>
-            {{pagina_inicial.detalhamento}}
-        </p>
-    </section>
-    <section id="sintomas">
-        <h2>Sintomas</h2>
-    </section>
-
-    <section id="tratamentos">
-        <h2>Tratamentos</h2>
-        <p> 
-        </p>
-    </section>
-
-    <footer>
-        <p>&copy; 2024 Mundo das Alergias. Todos os direitos reservados.</p>
-    </footer>
+    <h1>Deixe sua Mensagem</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Enviar</button>
+    </form>
+    </ul>
 </body>
 </html>
