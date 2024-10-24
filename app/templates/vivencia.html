@@ -47,9 +47,11 @@
     <header>
         <h1>Bem-vindo ao Mundo das Alergias</h1>
         <nav>
-            <a href="produto.html">Produtos</a>
-            <a href="receita.html">Receitas</a>
-            <a href="comentario/">Contato</a>
+            <a href="{% url 'pagina_inicial' %}">Home</a>
+            <a href="{% url 'produto' %}">Produtos</a>
+            <a href="{% url 'receita' %}">Receitas</a>
+            <a href="{% url 'comentario' %}">Contato</a>
+            <a href="{% url 'custom_admin_login' %}">Admin</a>
         </nav>
     </header>
     <h1>Vivências Cadastradas</h1>

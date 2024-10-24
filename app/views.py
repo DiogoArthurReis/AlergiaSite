@@ -2,7 +2,9 @@ from django.views import View
 from .models import *
 from django.shortcuts import render, redirect
 from .forms import GerenciarComentarioForm
-from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 
 
 # Create your views here.
@@ -66,3 +68,42 @@ class Pagina_InicialView(View):
         pagina_inicial = GerenciarPagina_Inicial.objects.all()
         return render(request, 'Pagina_Inicial.html', {'pagina_inicial': pagina_inicial})
     
+class AdminDashboardView(LoginRequiredMixin, View):
+    login_url = 'custom_admin_login'  
+    redirect_field_name = 'next' 
+
+    def get(self, request, *args, **kwargs):
+        return render(request, 'admin_dashboard.html')
+    
+def custom_login(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('admin:index')  
+        else:
+            messages.error(request, "Nome de usuário ou senha incorretos.")
+            return render(request, 'admin_login.html') 
+    return render(request, 'admin_login.html') 
+
+
+def lista_produtos(request):
+    produtos = GerenciarProduto.objects.all()
+    produtos_por_categoria = {}
+    
+    for produto in produtos:
+        categoria_nome = produto.categoria.nome
+        if categoria_nome not in produtos_por_categoria:
+            produtos_por_categoria[categoria_nome] = []
+        produtos_por_categoria[categoria_nome].append(produto)
+    
+    # Verifica se há produtos para mostrar
+    tem_produtos = bool(produtos_por_categoria)
+    
+    return render(request, 'sua_template.html', {
+        'produtos_por_categoria': produtos_por_categoria,
+        'tem_produtos': tem_produtos
+    })

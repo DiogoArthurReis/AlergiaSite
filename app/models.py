@@ -49,12 +49,10 @@ class GerenciarCategoria(models.Model):
         
 class GerenciarProduto(models.Model):
     nome = models.CharField(max_length=100)
-    categoria = models.ForeignKey(GerenciarCategoria, on_delete=models.CASCADE)
+    categoria = models.ForeignKey('GerenciarCategoria', on_delete=models.CASCADE) 
     descricao = models.CharField(max_length=100)
-    img = models.ImageField()
+    img = models.ImageField(upload_to='produtos/', null=True, blank=True)
 
-    class Meta:
-        verbose_name_plural = "GerenciarProduto"
 
     def __str__(self):
         return f'{self.nome} {self.categoria} {self.descricao} {self.img}'

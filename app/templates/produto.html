@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Produtos</title>
+    <title>Lista de Produtos - Mundo das Alergias</title>
     <style>
-       body {
+        body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
@@ -24,13 +24,58 @@
             margin: 0 15px;
             color: #fff;
             text-decoration: none;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #ffcc00; /* Cor ao passar o mouse */
         }
         section {
             padding: 20px;
-            margin: 20px;
+            margin: 20px auto;
             background: white;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px; /* Largura máxima para centralizar */
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .categoria-title {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: bold;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 5px;
+        }
+        ul {
+            list-style-type: none; /* Remove as bolinhas da lista */
+            padding: 0;
+        }
+        li {
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #f9f9f9; /* Fundo claro para cada produto */
+            border: 1px solid #ddd; /* Borda sutil */
+            border-radius: 5px;
+            transition: transform 0.2s;
+        }
+        li:hover {
+            transform: translateY(-2px); /* Leve efeito ao passar o mouse */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .produto-info {
+            display: flex;
+            align-items: center;
+        }
+        img {
+            max-width: 150px;
+            margin-right: 20px; /* Espaço entre a imagem e a descrição */
+            border-radius: 5px; /* Opcional: arredonda os cantos da imagem */
+        }
+        .descricao {
+            max-width: 600px; /* Limita a largura da descrição */
         }
         footer {
             text-align: center;
@@ -40,32 +85,50 @@
             position: relative;
             bottom: 0;
             width: 100%;
+            margin-top: 20px; /* Espaçamento acima do footer */
         }
     </style>
 </head>
 <body>
     <header>
         <h1>Bem-vindo ao Mundo das Alergias</h1>
-        <nav>
-            <a href="receita.html">Receitas</a>
-            <a href="vivencia.html">Vivências</a>
-            <a href="comentario/">Contato</a>
+        <nav role="navigation">
+            <a href="{% url 'pagina_inicial' %}">Home</a>
+            <a href="{% url 'receita' %}">Receitas</a>
+            <a href="{% url 'vivencia' %}">Vivências</a>
+            <a href="{% url 'comentario' %}">Contato</a>
+            <a href="{% url 'custom_admin_login' %}">Admin</a>
         </nav>
     </header>
-    <h1>Produtos Cadastrados</h1>
-    <ul>
-        {% for produto in produtos %}
-            <li>
-                <strong>{{ produto.nome }}</strong>
-                <p>{{ produto.categoria }}</p>
-                <p>{{ produto.descricao }}</p>
-                <p>{% if produto.img %}
-                    <img src="{{ produto.img.png }}" alt="{{ produto.nome }}" style="max-width: 150px; display: block; margin-bottom: 10px;"></p>
-                    {% endif %}
-                </li>
-        {% empty %}
-            <li>Nenhum produto cadastrado.</li>
-        {% endfor %}
-    </ul>
+    <section>
+        <h1>Produtos Cadastrados</h1>
+        {% if tem_produtos %}
+            {% for categoria, produtos in produtos_por_categoria.items %}
+                <div class="categoria-title">{{ categoria }}</div>
+                <ul>
+                    {% for produto in produtos %}
+                        <li>
+                            <div class="produto-info">
+                                {% if produto.img %}
+                                    <img src="{{ produto.img.url }}" alt="Imagem de {{ produto.nome }}">
+                                {% endif %}
+                                <div class="descricao">
+                                    <strong>{{ produto.nome }}</strong>
+                                    <p>{{ produto.descricao }}</p>
+                                </div>
+                            </div>
+                        </li>
+                    {% empty %}
+                        <li>Nenhum produto cadastrado nesta categoria.</li>
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+        {% else %}
+            <p>Nenhum produto cadastrado.</p>
+        {% endif %}
+    </section>    
+    <footer>
+        <p>&copy; 2024 Mundo das Alergias. Todos os direitos reservados.</p>
+    </footer>
 </body>
 </html>
