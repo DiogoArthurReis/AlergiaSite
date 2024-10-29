@@ -5,12 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Produtos - Mundo das Alergias</title>
     <style>
-        body {
+        /* Estilo geral */
+        body, html {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Garante que o rodapé fique sempre no fundo */
         }
+
+        /* Cabeçalho */
         header {
             background: #000;
             color: white;
@@ -27,64 +33,71 @@
             transition: color 0.3s;
         }
         nav a:hover {
-            color: #ffcc00; /* Cor ao passar o mouse */
+            color: #ffcc00;
         }
+
+        /* Conteúdo principal */
         section {
+            flex: 1; /* Faz com que a seção preencha o espaço restante */
             padding: 20px;
-            margin: 20px auto;
             background: white;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 800px; /* Largura máxima para centralizar */
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 100%; /* Preenche toda a largura */
+            overflow: auto; /* Adiciona rolagem se necessário */
         }
         h1 {
             text-align: center;
             margin-bottom: 20px;
         }
-        .categoria-title {
-            font-size: 1.5em;
-            margin-bottom: 10px;
-            color: #333;
-            font-weight: bold;
-            border-bottom: 2px solid #ddd;
-            padding-bottom: 5px;
-        }
-        ul {
-            list-style-type: none; /* Remove as bolinhas da lista */
-            padding: 0;
+        .produto-lista {
+            display: flex;
+            flex-wrap: wrap; /* Permite que os produtos se movam para a linha seguinte */
+            justify-content: space-between; /* Espaça os produtos uniformemente */
         }
         li {
-            padding: 15px;
-            margin-bottom: 15px;
-            background: #f9f9f9; /* Fundo claro para cada produto */
-            border: 1px solid #ddd; /* Borda sutil */
-            border-radius: 5px;
-            transition: transform 0.2s;
+            padding: 20px;
+            margin: 10px 0; /* Margem entre os produtos */
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            flex: 0 1 calc(30% - 20px); /* Cada produto ocupa 30% da largura com espaço */
+            display: flex;
+            align-items: center;
         }
         li:hover {
-            transform: translateY(-2px); /* Leve efeito ao passar o mouse */
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
         .produto-info {
             display: flex;
             align-items: center;
+            flex: 1;
         }
         img {
-            max-width: 150px;
-            margin-right: 20px; /* Espaço entre a imagem e a descrição */
-            border-radius: 5px; /* Opcional: arredonda os cantos da imagem */
+            max-width: 100px; /* Tamanho fixo para a imagem */
+            margin-right: 20px;
+            border-radius: 10px;
+            border: 2px solid #ddd;
+            transition: transform 0.2s;
+        }
+        img:hover {
+            transform: scale(1.05);
         }
         .descricao {
-            max-width: 600px; /* Limita a largura da descrição */
+            color: #333;
         }
+
+        /* Rodapé fixo */
         footer {
             text-align: center;
             padding: 10px 0;
             background: #000;
             color: white;
-            position: relative;
-            bottom: 0;
             width: 100%;
+            position: relative; /* Mantém o rodapé na posição correta */
             margin-top: 20px; /* Espaçamento acima do footer */
         }
     </style>
@@ -102,30 +115,23 @@
     </header>
     <section>
         <h1>Produtos Cadastrados</h1>
-        {% if tem_produtos %}
-            {% for categoria, produtos in produtos_por_categoria.items %}
-                <div class="categoria-title">{{ categoria }}</div>
-                <ul>
-                    {% for produto in produtos %}
-                        <li>
-                            <div class="produto-info">
-                                {% if produto.img %}
-                                    <img src="{{ produto.img.url }}" alt="Imagem de {{ produto.nome }}">
-                                {% endif %}
-                                <div class="descricao">
-                                    <strong>{{ produto.nome }}</strong>
-                                    <p>{{ produto.descricao }}</p>
-                                </div>
-                            </div>
-                        </li>
-                    {% empty %}
-                        <li>Nenhum produto cadastrado nesta categoria.</li>
-                    {% endfor %}
-                </ul>
+        <ul class="produto-lista">
+            {% for produto in produtos %}
+                <li>
+                    <div class="produto-info">
+                        {% if produto.img %}
+                            <img src="{{ produto.img.url }}" alt="Imagem de {{ produto.nome }}">
+                        {% endif %}
+                        <div class="descricao">
+                            <strong>{{ produto.nome }}</strong>
+                            <p>{{ produto.descricao }}</p>
+                        </div>
+                    </div>
+                </li>
+            {% empty %}
+                <li>Nenhum produto cadastrado.</li>
             {% endfor %}
-        {% else %}
-            <p>Nenhum produto cadastrado.</p>
-        {% endif %}
+        </ul>
     </section>    
     <footer>
         <p>&copy; 2024 Mundo das Alergias. Todos os direitos reservados.</p>

@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>O que é a Alergia?</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
+            padding-bottom: 60px; /* Espaço para o rodapé fixo */
         }
         header {
             background: #000;
@@ -24,22 +25,36 @@
             margin: 0 15px;
             color: #fff;
             text-decoration: none;
+            transition: color 0.3s; /* Transição suave ao passar o mouse */
+        }
+        nav a:hover {
+            color: #ffcc00; /* Cor ao passar o mouse */
         }
         section {
             padding: 20px;
-            margin: 20px;
+            margin: 20px auto; /* Centraliza a seção */
             background: white;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px; /* Largura máxima para centralizar */
+        }
+        h2 {
+            margin-top: 0; /* Remove margem superior em títulos */
+            color: #333; /* Cor dos títulos */
+        }
+        p {
+            line-height: 1.6; /* Melhora a legibilidade do texto */
+            color: #555; /* Cor do texto */
         }
         footer {
             text-align: center;
             padding: 10px 0;
             background: #000;
             color: white;
-            position: relative;
-            bottom: 0;
-            width: 100%;
+            position: fixed; /* Rodapé fixo */
+            bottom: 0; /* Mantém na parte inferior */
+            left: 0; /* Garante que o rodapé preencha a largura total */
+            width: 100%; /* Garante que o rodapé preencha a largura total */
         }
     </style>
 </head>
@@ -54,22 +69,34 @@
             <a href="{% url 'custom_admin_login' %}">Admin</a>
         </nav>
     </header>
+    
     <section id="o-que-sao">
-        <h2>O que é a {{pagina_inicial.nome_alergia}}?</h2>
-        <p>
-            {{pagina_inicial.detalhamento}}
-        </p>
+        <h2>O que é a {{ pagina_inicial.nome_alergia }}?</h2>
+        {% if pagina_inicial %}
+            <p>{{ pagina_inicial.detalhamento }}</p>
+        {% else %}
+            <p>Nenhum dado encontrado sobre a alergia.</p>
+        {% endif %}
     </section>
+    
     <section id="sintomas">
         <h2>Sintomas</h2>
+        {% if pagina_inicial %}
+            <p>{{ pagina_inicial.sintomas }}</p>
+        {% else %}
+            <p>Nenhum sintoma disponível.</p>
+        {% endif %}
     </section>
-
+    
     <section id="tratamentos">
         <h2>Tratamentos</h2>
-        <p> 
-        </p>
-    </section>
-
+        {% if pagina_inicial %}
+            <p>{{ pagina_inicial.tratamentos }}</p>
+        {% else %}
+            <p>Nenhum tratamento disponível.</p>
+        {% endif %}
+    </section>    
+    
     <footer>
         <p>&copy; 2024 Mundo das Alergias. Todos os direitos reservados.</p>
     </footer>

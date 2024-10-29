@@ -10,42 +10,83 @@
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
+            line-height: 1.6; /* Melhora a legibilidade */
         }
         header {
             background: #000;
             color: white;
-            padding: 10px 0;
+            padding: 15px 0; /* Espaço maior para um cabeçalho mais arejado */
             text-align: center;
         }
         nav {
-            margin: 20px 0;
+            margin: 15px 0;
         }
         nav a {
             margin: 0 15px;
             color: #fff;
             text-decoration: none;
+            transition: color 0.3s; /* Suaviza a transição de cor */
+        }
+        nav a:hover {
+            color: #ffcc00; /* Cor ao passar o mouse */
+        }
+        h1 {
+            margin: 20px 0;
+            font-size: 2em; /* Aumenta o tamanho do título */
         }
         section {
             padding: 20px;
-            margin: 20px;
+            margin: 20px auto; /* Centraliza a seção */
             background: white;
+            border-radius: 10px; /* Aumenta o raio da borda para um visual mais suave */
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            max-width: 800px; /* Limita a largura da seção */
+        }
+        ul {
+            list-style-type: none; /* Remove as bolinhas da lista */
+            padding: 0; /* Remove padding padrão */
+        }
+        li {
+            margin-bottom: 20px; /* Espaçamento entre receitas */
+            padding: 15px;
+            background: #f9f9f9; /* Fundo claro para cada receita */
+            border: 1px solid #ddd; /* Borda sutil */
             border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s; /* Efeito suave ao passar o mouse */
+        }
+        li:hover {
+            transform: translateY(-2px); /* Leve efeito ao passar o mouse */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        img {
+            max-width: 100%; /* Imagem ocupa o espaço disponível */
+            height: auto; /* Mantém a proporção da imagem */
+            border-radius: 5px; /* Arredonda os cantos da imagem */
+        }
+        h3 {
+            margin: 10px 0 5px; /* Espaçamento entre título e conteúdo */
+            font-size: 1.5em; /* Aumenta o tamanho do subtítulo */
+            color: #333; /* Cor escura para melhor contraste */
+        }
+        p {
+            margin: 0 0 10px; /* Espaçamento abaixo do parágrafo */
+            color: #555; /* Cor cinza para o texto */
         }
         footer {
             text-align: center;
-            padding: 10px 0;
+            padding: 15px 0;
             background: #000;
             color: white;
             position: relative;
             bottom: 0;
             width: 100%;
+            margin-top: 20px; /* Espaço acima do rodapé */
         }
     </style>
 </head>
 <body>
     <header>
-    <h1>Bem-vindo ao Mundo das Alergias</h1>
+        <h1>Bem-vindo ao Mundo das Alergias</h1>
         <nav>
             <a href="{% url 'pagina_inicial' %}">Home</a>
             <a href="{% url 'produto' %}">Produtos</a>
@@ -54,22 +95,27 @@
             <a href="{% url 'custom_admin_login' %}">Admin</a>
         </nav>
     </header>
-    <h1>Receitas Cadastradas</h1>
-    <ul>
-        {% for receita in receitas %}
-            <li>
-                {% if receita.imagem %}
-                    <img src="{{ receita.imagem.url }}" alt="{{ receita.nome }}" style="max-width: 150px; display: block; margin-bottom: 10px;">
-                {% endif %}
-                <strong>{{ receita.nome }}</strong><br>
-                <h3>Ingredientes:</h3>
-                <p>{{ receita.ingredientes }}</p>
-                <h3>Modo de Preparo:</h3>
-                <p>{{ receita.descricao }}</p>
-            </li>
-        {% empty %}
-            <li>Nenhuma receita cadastrada.</li>
-        {% endfor %}
-    </ul>
+    <section>
+        <h1>Receitas Cadastradas</h1>
+        <ul>
+            {% for receita in receitas %}
+                <li>
+                    {% if receita.imagem %}
+                        <img src="{{ receita.imagem.url }}" alt="{{ receita.nome }}" style="max-width: 150px; display: block; margin-bottom: 10px;">
+                    {% endif %}
+                    <strong>{{ receita.nome }}</strong><br>
+                    <h3>Ingredientes:</h3>
+                    <p>{{ receita.ingredientes }}</p>
+                    <h3>Modo de Preparo:</h3>
+                    <p>{{ receita.descricao }}</p>
+                </li>
+            {% empty %}
+                <li>Nenhuma receita cadastrada.</li>
+            {% endfor %}
+        </ul>
+    </section>
+    <footer>
+        <p>&copy; 2024 - Mundo das Alergias. Todos os direitos reservados.</p>
+    </footer>
 </body>
 </html>

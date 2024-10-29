@@ -10,6 +10,7 @@
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
+            padding-bottom: 60px; /* Espaço para o rodapé fixo */
         }
         header {
             background: #000;
@@ -24,22 +25,55 @@
             margin: 0 15px;
             color: #fff;
             text-decoration: none;
+            transition: color 0.3s; /* Transição suave ao passar o mouse */
+        }
+        nav a:hover {
+            color: #ffcc00; /* Cor ao passar o mouse */
         }
         section {
             padding: 20px;
-            margin: 20px;
+            margin: 20px auto; /* Centraliza a seção */
             background: white;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px; /* Largura máxima para centralizar */
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column; /* Organiza os elementos verticalmente */
+        }
+        form input, form textarea {
+            padding: 10px;
+            margin-bottom: 10px; /* Espaçamento entre os campos */
+            border: 1px solid #ccc; /* Borda padrão */
+            border-radius: 5px; /* Arredonda os cantos */
+            font-size: 16px; /* Tamanho da fonte */
+        }
+        button {
+            padding: 10px;
+            background: #000;
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            transition: background 0.3s; 
+        }
+        button:hover {
+            background: #ffcc00; 
         }
         footer {
             text-align: center;
             padding: 10px 0;
             background: #000;
             color: white;
-            position: relative;
-            bottom: 0;
-            width: 100%;
+            position: fixed;
+            bottom: 0; 
+            left: 0; 
+            width: 100%; 
         }
     </style>
 </head>
@@ -54,12 +88,16 @@
             <a href="{% url 'custom_admin_login' %}">Admin</a>
         </nav>
     </header>
-    <h1>Deixe sua Mensagem</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Enviar</button>
-    </form>
-    </ul>
+    <section>
+        <h1>Deixe sua Mensagem</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Enviar</button>
+        </form>
+    </section>
+    <footer>
+        <p>&copy; 2024 Mundo das Alergias. Todos os direitos reservados.</p>
+    </footer>
 </body>
 </html>

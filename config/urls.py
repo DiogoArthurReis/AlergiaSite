@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path    
-from app.views import custom_login, IndexView, UsuarioView, VivenciaView, ComentarioView, CategoriaView, ProdutoView, ReceitaView, Pagina_InicialView
+from app.views import custom_login, IndexView, UsuarioView, VivenciaView, ComentarioView, ProdutoView, ReceitaView, Pagina_InicialView
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -27,7 +27,6 @@ urlpatterns = [
     path('usuario/', UsuarioView.as_view(), name='usuario'),
     path('vivencia.html', VivenciaView.as_view(), name='vivencia'),
     path('comentario/', ComentarioView.as_view(), name='comentario'),
-    path('categoria/', CategoriaView.as_view(), name='categoria'),
     path('produto.html', ProdutoView.as_view(), name='produto'),
     path('receita.html', ReceitaView.as_view(), name='receita'),
     path('pagina_inicial.html', Pagina_InicialView.as_view(), name='pagina_inicial'),

@@ -48,11 +48,6 @@ class ComentarioView(View):
         mensagens = GerenciarComentario.objects.all()
         return render(request, 'comentario.html', {'form': form, 'mensagens': mensagens})
     
-class CategoriaView(View):
-    def get(self, request, *args, **kwargs):
-        categorias = GerenciarCategoria.objects.all()
-        return render(request, 'Categoria.html', {'categorias': categorias})
-    
 class ProdutoView(View):
     def get(self, request, *args, **kwargs):
         produtos = GerenciarProduto.objects.all()
@@ -65,8 +60,8 @@ class ReceitaView(View):
     
 class Pagina_InicialView(View):
     def get(self, request, *args, **kwargs):
-        pagina_inicial = GerenciarPagina_Inicial.objects.all()
-        return render(request, 'Pagina_Inicial.html', {'pagina_inicial': pagina_inicial})
+        pagina_inicial = GerenciarPagina_Inicial.objects.first()  # Obter o primeiro registro
+        return render(request, 'pagina_inicial.html', {'pagina_inicial': pagina_inicial})
     
 class AdminDashboardView(LoginRequiredMixin, View):
     login_url = 'custom_admin_login'  
@@ -92,18 +87,4 @@ def custom_login(request):
 
 def lista_produtos(request):
     produtos = GerenciarProduto.objects.all()
-    produtos_por_categoria = {}
-    
-    for produto in produtos:
-        categoria_nome = produto.categoria.nome
-        if categoria_nome not in produtos_por_categoria:
-            produtos_por_categoria[categoria_nome] = []
-        produtos_por_categoria[categoria_nome].append(produto)
-    
-    # Verifica se há produtos para mostrar
-    tem_produtos = bool(produtos_por_categoria)
-    
-    return render(request, 'sua_template.html', {
-        'produtos_por_categoria': produtos_por_categoria,
-        'tem_produtos': tem_produtos
-    })
+    return render(request, 'produto.html', {'produtos': produtos})

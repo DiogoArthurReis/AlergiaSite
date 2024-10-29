@@ -38,28 +38,18 @@ class GerenciarComentario(models.Model):
     def __str__(self):
         return f'{self.mensagem}'
         
-class GerenciarCategoria(models.Model):
-    nome = models.CharField(max_length=100)
-
-    class Meta:
-        verbose_name_plural = "GerenciarCategoria"
-
-    def __str__(self):
-        return f'{self.nome}'
-        
 class GerenciarProduto(models.Model):
     nome = models.CharField(max_length=100)
-    categoria = models.ForeignKey('GerenciarCategoria', on_delete=models.CASCADE) 
+    categoria = models.CharField(max_length=100)
     descricao = models.CharField(max_length=100)
     img = models.ImageField(upload_to='produtos/', null=True, blank=True)
 
-
     def __str__(self):
-        return f'{self.nome} {self.categoria} {self.descricao} {self.img}'
+        return f'{self.nome} ({self.categoria})'
         
 class GerenciarReceita(models.Model):
     nome = models.CharField(max_length=100)
-    categoria = models.ForeignKey(GerenciarCategoria, on_delete=models.CASCADE)
+    categoria = models.CharField(max_length=100) 
     descricao = models.CharField(max_length=100)
     img = models.ImageField()
 
